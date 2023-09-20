@@ -40,6 +40,17 @@ app.post("/addabook", async (req, res) => {
   res.status(201).json(successResponse);
 });
 
+app.get("/listallbooks", async (req, res) => {
+  const books = await Book.findAll();
+  const successResponse = {
+    books: books,
+    message: "Books succesfully retreived",
+  };
+  res.status(201).json(successResponse);
+});
+
+
+
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "App is healthy" });
 });
