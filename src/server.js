@@ -27,6 +27,19 @@ const syncTables = () => {
   Book.sync();
 };
 
+app.post("/addabook", async (req, res) => {
+  const book = await Book.create({
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre,
+  });
+  const successResponse = {
+    book: book,
+    message: "Book successfully added",
+  };
+  res.status(201).json(successResponse);
+});
+
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "App is healthy" });
 });
