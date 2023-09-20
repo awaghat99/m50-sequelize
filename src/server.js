@@ -57,6 +57,15 @@ app.put("/updateauthor", async (req, res) => {
   res.status(200).json(successResponse);
 });
 
+app.delete("/deleteabook", async (req, res) => {
+  await Book.destroy({ where: { title: req.body.title } });
+
+  const successResponse = {
+    message: "Book succesfully deleted",
+  };
+  res.status(200).json(successResponse);
+});
+
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "App is healthy" });
 });
