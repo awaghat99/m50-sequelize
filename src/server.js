@@ -23,10 +23,15 @@ const Book = connection.define("Book", {
   },
 });
 
+const syncTables = () => {
+  Book.sync();
+};
+
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "App is healthy" });
 });
 
 app.listen(port, () => {
+  syncTables();
   console.log(`App is listening on port ${port}`);
 });
