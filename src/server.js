@@ -49,7 +49,13 @@ app.get("/listallbooks", async (req, res) => {
   res.status(201).json(successResponse);
 });
 
-
+app.put("/updateauthor", async (req, res) => {
+  await Book.update({ author: req.body.author }, { where: { title: req.body.title } });
+  const successResponse = {
+    message: "Author successfully updated",
+  };
+  res.status(200).json(successResponse);
+});
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "App is healthy" });
