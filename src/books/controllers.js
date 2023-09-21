@@ -17,6 +17,7 @@ const addABook = async (req, res) => {
     const author = await Author.findOne({ where: { author: req.body.author } });
     const book = await Book.create({
       title: req.body.title,
+      author: req.body.author,
       AuthorId: author.id,
       GenreId: genre.id,
     });
