@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Book = require("./model");
-const { getAllBooks } = require("./conrollers");
+const { getAllBooks } = require("./controllers");
 
 router.post("/addabook", async (req, res) => {
   const book = await Book.create({
