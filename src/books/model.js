@@ -10,9 +10,6 @@ const Book = connection.define("Book", {
   author: {
     type: DataTypes.STRING,
   },
-  genre: {
-    type: DataTypes.STRING,
-  },
 });
 
 module.exports = Book;

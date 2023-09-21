@@ -16,7 +16,10 @@ app.use("/books", router);
 app.use("/genres", genreRouter);
 
 const syncTables = () => {
-  Book.sync();
+  Book.belongsTo(Genre);
+  Genre.hasMany(Book);
+
+  Book.sync({ alter: true });
   Genre.sync();
 };
 
