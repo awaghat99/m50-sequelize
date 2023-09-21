@@ -1,5 +1,6 @@
 const Book = require("./model");
 const Genre = require("../genres/model");
+const Author = require("../authors/model");
 
 const getAllBooks = async (req, res) => {
   try {
@@ -13,9 +14,10 @@ const getAllBooks = async (req, res) => {
 const addABook = async (req, res) => {
   try {
     const genre = await Genre.findOne({ where: { genre: req.body.genre } });
+    const author = await Author.findOne({ where: { author: req.body.author } });
     const book = await Book.create({
       title: req.body.title,
-      author: req.body.author,
+      AuthorId: author.id,
       GenreId: genre.id,
     });
     res.status(201).json({ book: book, message: "Book successfully added" });
