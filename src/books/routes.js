@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Book = require("./model");
+const { getAllBooks } = require("./conrollers");
 
 router.post("/addabook", async (req, res) => {
   const book = await Book.create({
@@ -15,14 +16,7 @@ router.post("/addabook", async (req, res) => {
   res.status(201).json(successResponse);
 });
 
-router.get("/listallbooks", async (req, res) => {
-  const books = await Book.findAll();
-  const successResponse = {
-    books: books,
-    message: "Books succesfully retreived",
-  };
-  res.status(201).json(successResponse);
-});
+router.get("/listallbooks", getAllBooks);
 
 router.put("/updateauthor", async (req, res) => {
   await Book.update({ author: req.body.author }, { where: { title: req.body.title } });
