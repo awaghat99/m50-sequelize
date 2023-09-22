@@ -29,6 +29,17 @@ const getByAuthor = async (req, res) => {
   }
 };
 
+const getByTitleParams = async (req, res) => {
+  try {
+    const book = await Book.findOne({ where: { title: req.params.title } });
+    const author = await Author.findOne({ where: { id: book.AuthorId } });
+    const genre = await Genre.findOne({ where: { id: book.GenreId } });
+    res.status(200).json({ message: "Book found", book: book, author: author, genre: genre });
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
 const updateBookByTitle = async (req, res) => {
   try {
     await Book.update(req.body, { where: { title: req.body.title } });
@@ -79,10 +90,11 @@ const deleteAllBooks = async (req, res) => {
 };
 
 module.exports = {
-  getAllBooks: getAllBooks,
-  addABook: addABook,
-  deleteabook: deleteabook,
-  getByAuthor: getByAuthor,
-  updateBookByTitle: updateBookByTitle,
-  deleteAllBooks: deleteAllBooks,
+  getAllBooks,
+  addABook,
+  deleteabook,
+  getByAuthor,
+  updateBookByTitle,
+  deleteAllBooks,
+  getByTitleParams,
 };

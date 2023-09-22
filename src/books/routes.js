@@ -1,13 +1,15 @@
 const { Router } = require("express");
 const router = Router();
 const Book = require("./model");
-const { getAllBooks, addABook, updateAuthor, deleteabook, getByAuthor, updateBookByTitle, deleteAllBooks } = require("./controllers");
+const { getAllBooks, addABook, deleteabook, getByAuthor, updateBookByTitle, deleteAllBooks, getByTitleParams } = require("./controllers");
 
 router.post("/addabook", addABook);
 
 router.get("/listallbooks", getAllBooks);
 
 router.get("/getbyauthor", getByAuthor);
+
+router.get("/getbytitleparams/:title", getByTitleParams);
 
 router.put("/updatebookbytitle", updateBookByTitle);
 
