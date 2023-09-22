@@ -73,6 +73,15 @@ const deleteabook = async (req, res) => {
   }
 };
 
+const deleteAllBooks = async (req, res) => {
+  try {
+    await Book.destroy({ truncate: true });
+    res.status(200).json({ message: "All books deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
 module.exports = {
   getAllBooks: getAllBooks,
   addABook: addABook,
@@ -80,4 +89,5 @@ module.exports = {
   deleteabook: deleteabook,
   getByAuthor: getByAuthor,
   updateBookByTitle: updateBookByTitle,
+  deleteAllBooks: deleteAllBooks,
 };

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Book = require("./model");
-const { getAllBooks, addABook, updateAuthor, deleteabook, getByAuthor, updateBookByTitle } = require("./controllers");
+const { getAllBooks, addABook, updateAuthor, deleteabook, getByAuthor, updateBookByTitle, deleteAllBooks } = require("./controllers");
 
 router.post("/addabook", addABook);
 
@@ -14,5 +14,7 @@ router.put("/updatebookbytitle", updateBookByTitle);
 router.put("/updateauthor", updateAuthor);
 
 router.delete("/deleteabook", deleteabook);
+
+router.delete("/deleteallbooks", deleteAllBooks);
 
 module.exports = router;
