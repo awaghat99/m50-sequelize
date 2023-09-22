@@ -13,12 +13,37 @@ const getAllBooks = async (req, res) => {
 
 const getByAuthor = async (req, res) => {
   try {
-    const books = await Book.findAll({
-      where: {
-        author: req.body.author,
-      },
-    });
-    res.status(200).json({ message: `These are the books with author: ${req.body.author}`, books: books });
+    const author = await Author.findOne({ where: { author: req.body.author } });
+    if (author) {
+      const books = await Book.findAll({
+        where: {
+          AuthorId: author.id,
+        },
+      });
+      res.status(200).json({ message: `These are the books with author: ${req.body.author}`, books: books });
+    } else {
+      res.status(404).json({ message: `Author ${req.body.author} not found` });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
+const getByTitleParams = async (req, res) => {
+  try {
+    const book = await Book.findOne({ where: { title: req.params.title } });
+    const author = await Author.findOne({ where: { id: book.AuthorId } });
+    const genre = await Genre.findOne({ where: { id: book.GenreId } });
+    res.status(200).json({ message: "Book found", book: book, author: author, genre: genre });
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
+const updateBookByTitle = async (req, res) => {
+  try {
+    await Book.update(req.body, { where: { title: req.body.title } });
+    res.status(200).json({ message: "Book successfully updated" });
   } catch (error) {
     res.status(400).json({ error: error, errorMessage: error.message });
   }
@@ -46,15 +71,6 @@ const addABook = async (req, res) => {
   }
 };
 
-const updateAuthor = async (req, res) => {
-  try {
-    await Book.update({ author: req.body.author }, { where: { title: req.body.title } });
-    res.status(200).json({ message: "author successfully updated" });
-  } catch (error) {
-    res.status(400).json({ error: error, errorMessage: error.message });
-  }
-};
-
 const deleteabook = async (req, res) => {
   try {
     await Book.destroy({ where: { title: req.body.title } });
@@ -64,10 +80,21 @@ const deleteabook = async (req, res) => {
   }
 };
 
+const deleteAllBooks = async (req, res) => {
+  try {
+    await Book.destroy({ truncate: true });
+    res.status(200).json({ message: "All books deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
 module.exports = {
-  getAllBooks: getAllBooks,
-  addABook: addABook,
-  updateAuthor: updateAuthor,
-  deleteabook: deleteabook,
-  getByAuthor: getByAuthor,
+  getAllBooks,
+  addABook,
+  deleteabook,
+  getByAuthor,
+  updateBookByTitle,
+  deleteAllBooks,
+  getByTitleParams,
 };
