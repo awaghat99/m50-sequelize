@@ -11,8 +11,6 @@ router.get("/getbyauthor", getByAuthor);
 
 router.put("/updatebookbytitle", updateBookByTitle);
 
-router.put("/updateauthor", updateAuthor);
-
 router.delete("/deleteabook", deleteabook);
 
 router.delete("/deleteallbooks", deleteAllBooks);

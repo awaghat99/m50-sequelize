@@ -7,9 +7,6 @@ const Book = connection.define("Book", {
     unique: true,
     allowNull: false,
   },
-  author: {
-    type: DataTypes.STRING,
-  },
 });
 
 module.exports = Book;

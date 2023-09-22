@@ -60,15 +60,6 @@ const addABook = async (req, res) => {
   }
 };
 
-const updateAuthor = async (req, res) => {
-  try {
-    await Book.update({ author: req.body.author }, { where: { title: req.body.title } });
-    res.status(200).json({ message: "author successfully updated" });
-  } catch (error) {
-    res.status(400).json({ error: error, errorMessage: error.message });
-  }
-};
-
 const deleteabook = async (req, res) => {
   try {
     await Book.destroy({ where: { title: req.body.title } });
@@ -90,7 +81,6 @@ const deleteAllBooks = async (req, res) => {
 module.exports = {
   getAllBooks: getAllBooks,
   addABook: addABook,
-  updateAuthor: updateAuthor,
   deleteabook: deleteabook,
   getByAuthor: getByAuthor,
   updateBookByTitle: updateBookByTitle,
