@@ -11,6 +11,19 @@ const getAllBooks = async (req, res) => {
   }
 };
 
+const getByAuthor = async (req, res) => {
+  try {
+    const books = await Book.findAll({
+      where: {
+        author: req.body.author,
+      },
+    });
+    res.status(200).json({ message: `These are the books with author: ${req.body.author}`, books: books });
+  } catch (error) {
+    res.status(400).json({ error: error, errorMessage: error.message });
+  }
+};
+
 const addABook = async (req, res) => {
   try {
     let genre = await Genre.findOne({ where: { genre: req.body.genre } });
@@ -56,4 +69,5 @@ module.exports = {
   addABook: addABook,
   updateAuthor: updateAuthor,
   deleteabook: deleteabook,
+  getByAuthor: getByAuthor,
 };
