@@ -13,12 +13,17 @@ const getAllBooks = async (req, res) => {
 
 const getByAuthor = async (req, res) => {
   try {
-    const books = await Book.findAll({
-      where: {
-        author: req.body.author,
-      },
-    });
-    res.status(200).json({ message: `These are the books with author: ${req.body.author}`, books: books });
+    const author = await Author.findOne({ where: { author: req.body.author } });
+    if (author) {
+      const books = await Book.findAll({
+        where: {
+          AuthorId: author.id,
+        },
+      });
+      res.status(200).json({ message: `These are the books with author: ${req.body.author}`, books: books });
+    } else {
+      res.status(404).json({ message: `Author ${req.body.author} not found` });
+    }
   } catch (error) {
     res.status(400).json({ error: error, errorMessage: error.message });
   }
